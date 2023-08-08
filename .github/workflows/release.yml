@@ -34,7 +34,7 @@ jobs:
         run: npm audit signatures
         
       - name: Printing secret
-        run: echo "Secret is ${{vars.GH_TOKEN}}"
+        run: echo "Secret is ${{vars.GH_TOKEN}} ${{ secrets.GITHUB_TOKEN }}"
       
       - name: Release
         env:
