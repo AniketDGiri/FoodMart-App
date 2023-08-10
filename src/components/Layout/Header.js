@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Search from "../UI/Search";
 
 const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(
     JSON.parse(localStorage.getItem("darkMode")) || false
   );
 
+  //useState for implementing the search functionality
+
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
-    console.log(JSON.parse(localStorage.getItem("darkMode")));
+    // console.log(JSON.parse(localStorage.getItem("darkMode")));
 
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
@@ -16,6 +21,13 @@ const Header = () => {
       document.documentElement.classList.remove("dark");
     }
   }, [isDarkMode]);
+
+  //button onClick functionality implementation
+  const searchButtonHandler = () => {
+    setIsSearchVisible((prev) => {
+      return !prev;
+    });
+  };
 
   return (
     <header className="ml-5 mr-5">
@@ -40,7 +52,10 @@ const Header = () => {
               }
               className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-moon-fill "
             ></span>
-            <span className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-search"></span>
+            <span
+              onClick={searchButtonHandler}
+              className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-search"
+            ></span>
             <Link to="/cart" className="text-gray-700 dark:text-white mr-5">
               <span className="text-2xl bi bi-cart-fill relative">
                 <span className="text-white text-sm absolute -top-1 left-2.5 bg-rose-500 px-1 rounded-full ">
@@ -52,6 +67,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      {isSearchVisible && <Search setIsSearchVisible={setIsSearchVisible} />}
     </header>
   );
 };

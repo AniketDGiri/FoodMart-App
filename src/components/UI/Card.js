@@ -4,7 +4,7 @@ import Rating from "./Rating";
 export const Card = ({ product }) => {
   return (
     <div className="m-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <Link to={`${product.id}`} className="relative">
+      <Link to={`/products/${product.id}`} className="relative">
         {product.best_seller && (
           <span className="absolute top-4 left-2 px-2 bg-orange-500 bg-opacity-90 text-white rounded">
             Best Seller
@@ -13,7 +13,7 @@ export const Card = ({ product }) => {
         <img className="rounded-t-lg w-full h-96" src={product.poster} alt="" />
       </Link>
       <div className="p-5">
-        <Link to={`${product.id}`}>
+        <Link to={`/products/${product.id}`}>
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {product.name}
           </h5>
