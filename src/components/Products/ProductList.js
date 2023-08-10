@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Card } from "../UI/Card";
 import FilterBar from "../Filter/FilterBar";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 const ProductList = () => {
   const [isFilterVisible, setIsVisibleFilter] = useState(false);
@@ -15,16 +16,23 @@ const ProductList = () => {
     });
   };
 
+  //We need to fetch search param from the URL
+  //This is available with the reactRouter version 6
+  const [searchParam] = useSearchParams();
+
+  const filterValue = searchParam.get("q");
   //This is for fetching data fron the server, and since we are calling this function in useEffect, using it with useCallback to store the function, to avoid
   //infinite loop, during component re-rendering
 
   const getProductDetails = useCallback(async () => {
     const res = await axios({
       method: "get",
-      url: "http://localhost:8000/products",
+      url: `http://localhost:8000/products?name_like=${
+        searchParam ? filterValue : ""
+      }`,
     });
     setProductDetails(res.data);
-  }, []);
+  }, [filterValue, searchParam]);
 
   useEffect(() => {
     getProductDetails();
@@ -35,7 +43,7 @@ const ProductList = () => {
       <section className="my-5">
         <div className="my-5 flex justify-between">
           <span className="text-2xl font-semibold dark:text-slate-100 mb-5">
-            All Foods (15)
+            All Foods ({productDetails.length})
           </span>
           <span>
             {isFilterVisible && (
