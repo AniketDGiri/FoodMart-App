@@ -1,6 +1,22 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Header = () => {
+  const [isDarkMode, setIsDarkMode] = useState(
+    JSON.parse(localStorage.getItem("darkMode")) || false
+  );
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
+    console.log(JSON.parse(localStorage.getItem("darkMode")));
+
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
   return (
     <header className="ml-5 mr-5">
       <nav className="bg-white dark:bg-gray-900">
@@ -16,7 +32,14 @@ const Header = () => {
             </span>
           </Link>
           <div className="flex items-center relative mx-10">
-            <span className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-moon-fill"></span>
+            <span
+              onClick={() =>
+                setIsDarkMode((prev) => {
+                  return !prev;
+                })
+              }
+              className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-moon-fill "
+            ></span>
             <span className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-search"></span>
             <Link to="/cart" className="text-gray-700 dark:text-white mr-5">
               <span className="text-2xl bi bi-cart-fill relative">
