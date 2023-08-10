@@ -1,15 +1,35 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Card } from "../UI/Card";
 import FilterBar from "../Filter/FilterBar";
+import axios from "axios";
 
 const ProductList = () => {
   const [isFilterVisible, setIsVisibleFilter] = useState(false);
+
+  //this hook is used for setting all the data obtained from the axios call
+  const [productDetails, setProductDetails] = useState([]);
 
   const onDropDownButtonHandler = () => {
     setIsVisibleFilter((prev) => {
       return !prev;
     });
   };
+
+  //This is for fetching data fron the server, and since we are calling this function in useEffect, using it with useCallback to store the function, to avoid
+  //infinite loop, during component re-rendering
+
+  const getProductDetails = useCallback(async () => {
+    const res = await axios({
+      method: "get",
+      url: "http://localhost:8000/products",
+    });
+    setProductDetails(res.data);
+  }, []);
+
+  useEffect(() => {
+    getProductDetails();
+  }, [getProductDetails]);
+
   return (
     <main className="mx-10">
       <section className="my-5">
@@ -42,7 +62,9 @@ const ProductList = () => {
         </div>
 
         <div className="flex flex-wrap justify-center lg:flex-row">
-          <Card />
+          {productDetails.map((eachProduct) => (
+            <Card key={eachProduct.id} product={eachProduct} />
+          ))}
         </div>
       </section>
     </main>

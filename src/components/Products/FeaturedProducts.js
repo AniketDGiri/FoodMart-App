@@ -11,7 +11,7 @@ export const FeaturedProducts = () => {
       method: "get",
       url: "http://localhost:8000/featured_products",
     });
-    console.log(res.data);
+
     setFeaturedProductsData(res.data);
   }, []);
 

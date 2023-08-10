@@ -1,23 +1,10 @@
 import { Link } from "react-router-dom";
+import Rating from "./Rating";
 
 export const Card = ({ product }) => {
-  //For displaying start method
-  const starDisplay = [];
-  for (let i = 1; i <= 5; i++) {
-    if (i <= product.rating) {
-      starDisplay.push(
-        <i key={i} className="text-lg bi bi-star-fill text-yellow-500 mr-1"></i>
-      );
-    } else {
-      starDisplay.push(
-        <i key={i} className="text-lg bi bi-star text-yellow-500 mr-1"></i>
-      );
-    }
-  }
-
   return (
     <div className="m-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <Link to="/" className="relative">
+      <Link to={`${product.id}`} className="relative">
         {product.best_seller && (
           <span className="absolute top-4 left-2 px-2 bg-orange-500 bg-opacity-90 text-white rounded">
             Best Seller
@@ -26,7 +13,7 @@ export const Card = ({ product }) => {
         <img className="rounded-t-lg w-full h-96" src={product.poster} alt="" />
       </Link>
       <div className="p-5">
-        <Link to="/">
+        <Link to={`${product.id}`}>
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {product.name}
           </h5>
@@ -36,7 +23,7 @@ export const Card = ({ product }) => {
         </p>
 
         <div className="flex items-center my-2">
-          {[...starDisplay]}
+          <Rating rating={product.rating} />
           {/* {}
           <i className="text-lg bi bi-star-fill text-yellow-500 mr-1"></i>
           <i className="text-lg bi bi-star-fill text-yellow-500 mr-1"></i>
