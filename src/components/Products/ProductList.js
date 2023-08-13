@@ -3,6 +3,7 @@ import { Card } from "../UI/Card";
 import FilterBar from "../Filter/FilterBar";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
+import useTitle from "../../hooks/useTitle";
 
 const ProductList = () => {
   const [isFilterVisible, setIsVisibleFilter] = useState(false);
@@ -16,6 +17,9 @@ const ProductList = () => {
     });
   };
 
+  //craeted custom hook to set the title
+  useTitle({ title: "Product List" });
+
   //We need to fetch search param from the URL
   //This is available with the reactRouter version 6
   const [searchParam] = useSearchParams();
@@ -28,11 +32,11 @@ const ProductList = () => {
     const res = await axios({
       method: "get",
       url: `http://localhost:8000/products?name_like=${
-        searchParam ? filterValue : ""
+        filterValue ? filterValue : ""
       }`,
     });
     setProductDetails(res.data);
-  }, [filterValue, searchParam]);
+  }, [filterValue]);
 
   useEffect(() => {
     getProductDetails();
