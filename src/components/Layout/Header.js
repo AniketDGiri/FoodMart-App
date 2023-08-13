@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Search from "../UI/Search";
+import useTitle from "../../hooks/useTitle";
 
 const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(
@@ -29,11 +30,14 @@ const Header = () => {
     });
   };
 
+  //useTItle hook for displaying tile on window
+  useTitle({ title: "Home" });
+
   return (
     <header className="ml-5 mr-5">
       <nav className="bg-white dark:bg-gray-900">
         <div className="border-b border-slate-200 dark:border-b-0 flex flex-wrap justify-between items-center mx-auto max-w-full px-1 md:px-6 py-3">
-          <Link href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <img
               src="https://img.icons8.com/fluency/48/apple-jam.png"
               className="mr-3 h-10"
