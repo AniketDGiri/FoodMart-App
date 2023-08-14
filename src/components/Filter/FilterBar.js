@@ -1,4 +1,8 @@
+import { useFilter } from "../../store/filter-provider";
+
 export const FilterBar = ({ setIsVisibleFilter }) => {
+  const { state, dispatchFilterAction } = useFilter();
+
   return (
     <section className="filter">
       <div
@@ -46,9 +50,17 @@ export const FilterBar = ({ setIsVisibleFilter }) => {
                 <input
                   id="price-sort-1"
                   type="radio"
-                  value=""
+                  value="lowToHigh"
                   name="price-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={() => {
+                    return dispatchFilterAction({
+                      type: "SORT_BY",
+                      payload: {
+                        sortBy: "lowToHigh",
+                      },
+                    });
+                  }}
                 />
                 <label
                   htmlFor="price-sort-1"
@@ -61,9 +73,17 @@ export const FilterBar = ({ setIsVisibleFilter }) => {
                 <input
                   id="price-sort-2"
                   type="radio"
-                  value=""
+                  value="highToLow"
                   name="price-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={() => {
+                    return dispatchFilterAction({
+                      type: "SORT_BY",
+                      payload: {
+                        sortBy: "highToLow",
+                      },
+                    });
+                  }}
                 />
                 <label
                   htmlFor="price-sort-2"
@@ -82,6 +102,18 @@ export const FilterBar = ({ setIsVisibleFilter }) => {
                   value=""
                   name="rating-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                  checked={state.rating === "4StarsAndAbove" || false}
+                  onChange={() => {
+                    return dispatchFilterAction({
+                      type: "RATING",
+                      payload: {
+                        rating:
+                          state.rating === "4StarsAndAbove"
+                            ? "dfd"
+                            : "4StarsAndAbove",
+                      },
+                    });
+                  }}
                 />
                 <label
                   htmlFor="rating-sort-1"
@@ -97,6 +129,17 @@ export const FilterBar = ({ setIsVisibleFilter }) => {
                   value=""
                   name="rating-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                  checked={
+                    state.rating === "3StarsAndAbove" ? true : false || false
+                  }
+                  onChange={() => {
+                    return dispatchFilterAction({
+                      type: "RATING",
+                      payload: {
+                        rating: "3StarsAndAbove",
+                      },
+                    });
+                  }}
                 />
                 <label
                   htmlFor="rating-sort-2"
@@ -112,6 +155,17 @@ export const FilterBar = ({ setIsVisibleFilter }) => {
                   value=""
                   name="rating-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                  checked={
+                    state.rating === "2StarsAndAbove" ? true : false || false
+                  }
+                  onChange={() => {
+                    return dispatchFilterAction({
+                      type: "RATING",
+                      payload: {
+                        rating: "2StarsAndAbove",
+                      },
+                    });
+                  }}
                 />
                 <label
                   htmlFor="rating-sort-3"
@@ -127,6 +181,17 @@ export const FilterBar = ({ setIsVisibleFilter }) => {
                   value=""
                   name="rating-sort"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                  checked={
+                    state.rating === "1StarsAndAbove" ? true : false || false
+                  }
+                  onChange={() => {
+                    return dispatchFilterAction({
+                      type: "RATING",
+                      payload: {
+                        rating: "1StarsAndAbove",
+                      },
+                    });
+                  }}
                 />
                 <label
                   htmlFor="rating-sort-4"
@@ -143,7 +208,14 @@ export const FilterBar = ({ setIsVisibleFilter }) => {
                   id="best-seller"
                   type="checkbox"
                   value=""
+                  checked={state.bestSeller || false}
                   className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={() => {
+                    return dispatchFilterAction({
+                      type: "BEST_SELLER_ONLY",
+                      payload: { bestSeller: !state.bestSeller },
+                    });
+                  }}
                 />
                 <label
                   htmlFor="best-seller"
@@ -157,7 +229,16 @@ export const FilterBar = ({ setIsVisibleFilter }) => {
                   id="only-instock"
                   type="checkbox"
                   value=""
+                  checked={state.inStock || false}
                   className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={() => {
+                    dispatchFilterAction({
+                      type: "IN_STOCK_ONLY",
+                      payload: {
+                        inStock: !state.inStock,
+                      },
+                    });
+                  }}
                 />
                 <label
                   htmlFor="only-instock"
@@ -171,6 +252,11 @@ export const FilterBar = ({ setIsVisibleFilter }) => {
               <button
                 type="button"
                 className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-10 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                onClick={() => {
+                  return dispatchFilterAction({
+                    type: "CLEAR_FILTER",
+                  });
+                }}
               >
                 Clear Filter
               </button>

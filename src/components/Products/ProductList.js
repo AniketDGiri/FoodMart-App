@@ -4,12 +4,16 @@ import FilterBar from "../Filter/FilterBar";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
+import { useFilter } from "../../store/filter-provider";
 
 const ProductList = () => {
   const [isFilterVisible, setIsVisibleFilter] = useState(false);
 
+  //using useFilter custom created
+
+  const { productList, setInitialState } = useFilter();
   //this hook is used for setting all the data obtained from the axios call
-  const [productDetails, setProductDetails] = useState([]);
+  // const [productDetails, setProductDetails] = useState([]);
 
   const onDropDownButtonHandler = () => {
     setIsVisibleFilter((prev) => {
@@ -35,8 +39,9 @@ const ProductList = () => {
         filterValue ? filterValue : ""
       }`,
     });
-    setProductDetails(res.data);
-  }, [filterValue]);
+    // setProductDetails(res.data);
+    setInitialState(res.data);
+  }, [filterValue, setInitialState]);
 
   useEffect(() => {
     getProductDetails();
@@ -47,7 +52,7 @@ const ProductList = () => {
       <section className="my-5">
         <div className="my-5 flex justify-between">
           <span className="text-2xl font-semibold dark:text-slate-100 mb-5">
-            All Foods ({productDetails.length})
+            All Foods ({productList.length})
           </span>
           <span>
             {isFilterVisible && (
@@ -74,7 +79,7 @@ const ProductList = () => {
         </div>
 
         <div className="flex flex-wrap justify-center lg:flex-row">
-          {productDetails.map((eachProduct) => (
+          {productList.map((eachProduct) => (
             <Card key={eachProduct.id} product={eachProduct} />
           ))}
         </div>
