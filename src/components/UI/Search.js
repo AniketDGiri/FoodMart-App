@@ -10,7 +10,7 @@ export const Search = ({ setIsSearchVisible }) => {
 
   const onSearchButtonHandler = (event) => {
     event.preventDefault();
-    // console.log(`/products?q=${searchFieldRef.current.value}`);
+
     setIsSearchVisible(false);
     navigate(`/products?q=${searchFieldRef.current.value}`);
   };

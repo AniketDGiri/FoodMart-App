@@ -5,6 +5,8 @@ import HomePage from "../components/HomePage/HomePage";
 import ProductList from "../components/Products/ProductList";
 import ProductDetail from "../components/Products/ProductDetails";
 import { productDetailsLoader } from "../components/Products/ProductDetails";
+import Login from "../components/Authentication/Login";
+import Register from "../components/Authentication/Register";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
         path: "products/:productId",
         element: <ProductDetail />,
         loader: productDetailsLoader,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
       },
     ],
   },

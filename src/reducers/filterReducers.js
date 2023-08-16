@@ -9,10 +9,7 @@ export const filterReducer = (state, action) => {
       };
 
     case "BEST_SELLER_ONLY": {
-      console.log("in reduce");
       if (payload.bestSeller === true) {
-        console.log("inside red", state);
-
         return {
           ...state,
           bestSeller: true,
