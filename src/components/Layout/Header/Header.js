@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Search from "../UI/Search";
-import useTitle from "../../hooks/useTitle";
+import Search from "../../UI/Search";
+import useTitle from "../../../hooks/useTitle";
+import DropdownLoggedIn from "./DropDownLoggedIn";
+import DropdownLoggedOut from "./DropDownLoggedOut";
 
 const Header = () => {
+  //for showing dropdonw on userIcon
+  const [isDropDown, setIsDropDownn] = useState(false);
+
   const [isDarkMode, setIsDarkMode] = useState(
     JSON.parse(localStorage.getItem("darkMode")) || false
   );
@@ -11,6 +16,9 @@ const Header = () => {
   //useState for implementing the search functionality
 
   const [isSearchVisible, setIsSearchVisible] = useState(false);
+
+  //Getting info about whether user is logged in or not from session storage
+  const isToken = sessionStorage.getItem("accessToken");
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
@@ -67,7 +75,20 @@ const Header = () => {
                 </span>
               </span>
             </Link>
-            <span className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"></span>
+            <span
+              className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"
+              onClick={() => {
+                return setIsDropDownn((prev) => {
+                  return !prev;
+                });
+              }}
+            ></span>
+            {isDropDown &&
+              (isToken ? (
+                <DropdownLoggedIn setIsDropDownn={setIsDropDownn} />
+              ) : (
+                <DropdownLoggedOut setIsDropDownn={setIsDropDownn} />
+              ))}
           </div>
         </div>
       </nav>

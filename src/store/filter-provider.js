@@ -17,10 +17,7 @@ export const FilterProvider = ({ children }) => {
     filterReducerState
   );
 
-  console.log("before going", state);
-
   const setInitialState = useCallback((products) => {
-    console.log("PRoduct list getting called");
     dispatchFilterAction({
       type: "PRODUCT_LIST",
       payload: {
@@ -30,7 +27,6 @@ export const FilterProvider = ({ children }) => {
   }, []);
 
   const bestSeller = (productList) => {
-    console.log("inside best seller", productList);
     return state.bestSeller
       ? productList.filter((item) => {
           return item.best_seller === true;
@@ -85,16 +81,12 @@ export const FilterProvider = ({ children }) => {
     sortBy(inStock(bestSeller(state.productList)))
   );
 
-  console.log("state is", state.productList);
-
   const filterState = {
     productList: updatedProductList,
     state,
     dispatchFilterAction,
     setInitialState: setInitialState,
   };
-
-  console.log("value in contret", filterState.productList);
 
   return (
     <FilterContext.Provider value={filterState}>
@@ -106,6 +98,5 @@ export const FilterProvider = ({ children }) => {
 export const useFilter = () => {
   const context = useContext(FilterContext);
 
-  // console.log("Context is", context);
   return context;
 };

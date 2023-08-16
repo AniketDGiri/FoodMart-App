@@ -238,5 +238,42 @@
     }
   ],
   "orders": [],
-  "users": []
+  "users": [
+    {
+      "email": "aniket.g@example.com",
+      "password": "$2a$10$hO7vQ0tV1goKZpgqQqtBTuNd44NS2C8TARr2gOLuh1IogPdd8ARti",
+      "name": "Aniket",
+      "id": 1
+    },
+    {
+      "email": "jitesh.p@example.com",
+      "password": "$2a$10$C5LtFUVDjo.Xu7tlQQAYN.duxdZ8ip9Jq2dDNmzpsA3btwoTCxYcS",
+      "name": "Jitesh",
+      "id": 2
+    },
+    {
+      "email": "abc.w@example.com",
+      "password": "$2a$10$A88Fpbse7J1LjJBJZKXoiebk81XhDPOGttGU1YdLrdegXus8QoHrq",
+      "name": "Abc",
+      "id": 3
+    },
+    {
+      "email": "abc.ew@example.com",
+      "password": "$2a$10$z5HHOGkxNWHJ6Vd9bLN7V.4RMTHDAM2Tw.DcuT1dze4bZKEwZusMK",
+      "name": "Abc",
+      "id": 4
+    },
+    {
+      "email": "efwefweafwe@example.com",
+      "password": "$2a$10$pIjKlQhsIR09xLJs0ZpfFutSxMQh1IlVOo7kFNeET8N61PC2hW20W",
+      "name": "asdasd",
+      "id": 5
+    },
+    {
+      "email": "Aniket.p@example.com",
+      "password": "$2a$10$2MmBKUHpsXjXkmiBWqBQzuu05zTusqvDedrnP/ElBJ8S4AISRACzW",
+      "name": "Aniket",
+      "id": 6
+    }
+  ]
 }

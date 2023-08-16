@@ -15,7 +15,6 @@ export const ProductDetail = () => {
   const { data } = useLoaderData();
 
   const productDetail = data;
-  console.log(productDetail);
 
   return (
     <main>
