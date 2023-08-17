@@ -4,6 +4,7 @@ import Search from "../../UI/Search";
 import useTitle from "../../../hooks/useTitle";
 import DropdownLoggedIn from "./DropDownLoggedIn";
 import DropdownLoggedOut from "./DropDownLoggedOut";
+import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 
 const Header = () => {
   //for showing dropdonw on userIcon
@@ -41,6 +42,11 @@ const Header = () => {
   //useTItle hook for displaying tile on window
   useTitle({ title: "Home" });
 
+  //fetching cartItems data from cart context
+  const cartItemsInfo = useSelector((state) => {
+    return state.cartStore;
+  });
+
   return (
     <header className="ml-5 mr-5">
       <nav className="bg-white dark:bg-gray-900">
@@ -71,7 +77,7 @@ const Header = () => {
             <Link to="/cart" className="text-gray-700 dark:text-white mr-5">
               <span className="text-2xl bi bi-cart-fill relative">
                 <span className="text-white text-sm absolute -top-1 left-2.5 bg-rose-500 px-1 rounded-full ">
-                  0
+                  {cartItemsInfo.totalCartItems}
                 </span>
               </span>
             </Link>
