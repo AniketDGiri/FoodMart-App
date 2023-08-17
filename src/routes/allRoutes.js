@@ -7,6 +7,7 @@ import ProductDetail from "../components/Products/ProductDetails";
 import { productDetailsLoader } from "../components/Products/ProductDetails";
 import Login from "../components/Authentication/Login";
 import Register from "../components/Authentication/Register";
+import CartList from "../components/cart/CartList";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "cart",
+        element: <CartList />,
       },
     ],
   },

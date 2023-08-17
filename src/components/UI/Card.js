@@ -1,7 +1,35 @@
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
+import { useDispatch } from "react-redux";
+import { cartStoreActions } from "../../store/cartContext/cart-context";
+import { useState } from "react";
 
 export const Card = ({ product }) => {
+  //useState for changing the add/remove button icon
+  const [isAddButton, setIsAddButton] = useState(true);
+
+  //using useDispatch hook for dispatching an action to add/remove item from the context
+  const dispatch = useDispatch();
+
+  //button for add to cart handler
+  const addToCartHandler = () => {
+    setIsAddButton((prev) => {
+      return !prev;
+    });
+    dispatch(
+      cartStoreActions.addItemToCart({ product: { ...product, itemCount: 1 } })
+    );
+  };
+
+  //Handler for remove item from cart
+  const removeFromCartHandler = () => {
+    setIsAddButton((prev) => {
+      return !prev;
+    });
+
+    dispatch(cartStoreActions.removeItemFromCart({ product: product }));
+  };
+
   return (
     <div className="m-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
       <Link to={`/products/${product.id}`} className="relative">
@@ -37,9 +65,22 @@ export const Card = ({ product }) => {
             <span>$</span>
             <span>{product.price}</span>
           </span>
-          <button className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800">
-            Add To Cart <i className="ml-1 bi bi-plus-lg"></i>
+          <button
+            className={`inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg ${
+              isAddButton
+                ? " bg-blue-700 hover:bg-blue-800"
+                : " bg-red-700 hover:bg-red-800"
+            }`}
+            onClick={isAddButton ? addToCartHandler : removeFromCartHandler}
+          >
+            {isAddButton ? "Add to Cart" : "Remove Item"}
+            <i
+              className={`ml-1 ${
+                isAddButton ? "bi bi-plus-lg" : "bi bi-trash"
+              }`}
+            ></i>
           </button>
+
           {/* <button className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800">Remove Item <i className="ml-1 bi bi-trash3"></i></button> */}
         </p>
       </div>

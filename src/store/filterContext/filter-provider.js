@@ -1,4 +1,4 @@
-import { filterReducer } from "../reducers/filterReducers";
+import { filterReducer } from "../../reducers/filterReducers";
 import { useReducer, useContext, useCallback } from "react";
 
 import { FilterContext } from "./filter-context";

@@ -4,7 +4,7 @@ import FilterBar from "../Filter/FilterBar";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
-import { useFilter } from "../../store/filter-provider";
+import { useFilter } from "../../store/filterContext/filter-provider";
 
 const ProductList = () => {
   const [isFilterVisible, setIsVisibleFilter] = useState(false);

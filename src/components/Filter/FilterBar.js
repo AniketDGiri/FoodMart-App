@@ -1,4 +1,4 @@
-import { useFilter } from "../../store/filter-provider";
+import { useFilter } from "../../store/filterContext/filter-provider";
 
 export const FilterBar = ({ setIsVisibleFilter }) => {
   const { state, dispatchFilterAction } = useFilter();
