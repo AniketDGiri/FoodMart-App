@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import Rating from "./Rating";
 import { useDispatch } from "react-redux";
 import { cartStoreActions } from "../../store/cartContext/cart-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const Card = ({ product }) => {
   //useState for changing the add/remove button icon
@@ -29,6 +30,20 @@ export const Card = ({ product }) => {
 
     dispatch(cartStoreActions.removeItemFromCart({ product: product }));
   };
+
+  //checking from the added store whether item is alraedy present or not in the cart
+  const cartItemsInfo = useSelector((state) => {
+    return state.cartStore;
+  });
+
+  //useEffect for checking whether Item is added to the cart or not
+  useEffect(() => {
+    cartItemsInfo.cartItems.findIndex((item) => {
+      return item.id === product.id;
+    }) >= 0
+      ? setIsAddButton(false)
+      : setIsAddButton(true);
+  }, [cartItemsInfo.cartItems, product.id]);
 
   return (
     <div className="m-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
