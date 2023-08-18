@@ -1,4 +1,33 @@
-export const CartCheckout = () => {
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
+
+export const CartCheckout = ({ setIsCartCheckout }) => {
+  //useState to get change the state on getting userData
+  const [userData, setUserData] = useState({});
+  //useEffect hook to get the data of the user
+  useEffect(() => {
+    //fetching session info of the logged in User
+    const userId = JSON.parse(sessionStorage.getItem("userId"));
+    const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+
+    if (accessToken) {
+      const getUserDetails = async () => {
+        const res = await axios.get(
+          `http://localhost:8000/600/users/${userId}`,
+          {
+            headers: {
+              "Content-Type": "Application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setUserData(res.data);
+      };
+      getUserDetails();
+    }
+  }, []);
+
   return (
     <section>
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
@@ -8,6 +37,9 @@ export const CartCheckout = () => {
         className="mt-5 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center flex"
         aria-modal="true"
         role="dialog"
+        onClick={() => {
+          setIsCartCheckout(false);
+        }}
       >
         <div className="relative p-4 w-full max-w-md h-full md:h-auto overflow-y-auto">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -15,6 +47,9 @@ export const CartCheckout = () => {
               type="button"
               className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
               data-modal-toggle="authentication-modal"
+              onClick={() => {
+                setIsCartCheckout(false);
+              }}
             >
               <svg
                 aria-hidden="true"
@@ -48,7 +83,7 @@ export const CartCheckout = () => {
                     name="name"
                     id="name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:value-gray-400 dark:text-white"
-                    value="Shubham Sarda"
+                    value={userData.name || ""}
                     disabled
                     required=""
                   />
@@ -65,7 +100,7 @@ export const CartCheckout = () => {
                     name="email"
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:value-gray-400 dark:text-white"
-                    value="shubham@example.com"
+                    value={userData.email || ""}
                     disabled
                     required=""
                   />

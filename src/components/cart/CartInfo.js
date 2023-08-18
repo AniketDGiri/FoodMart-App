@@ -3,6 +3,8 @@ import CartEmpty from "./CartEmpty";
 import CartList from "./CartList";
 
 const CartInfo = () => {
+  //useNavigate Hook incase the user is not authenticated
+
   //fetching cartItems data from cart context
   const cartItemsInfo = useSelector((state) => {
     return state.cartStore;

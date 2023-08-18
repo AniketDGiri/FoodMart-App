@@ -8,6 +8,7 @@ import { productDetailsLoader } from "../components/Products/ProductDetails";
 import Login from "../components/Authentication/Login";
 import Register from "../components/Authentication/Register";
 import CartInfo from "../components/cart/CartInfo";
+import ProtectedRoutes from "../components/Authentication/ProtectedRoutes";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,11 @@ const router = createBrowserRouter([
       },
       {
         path: "cart",
-        element: <CartInfo />,
+        element: (
+          <ProtectedRoutes>
+            <CartInfo />
+          </ProtectedRoutes>
+        ),
       },
     ],
   },
