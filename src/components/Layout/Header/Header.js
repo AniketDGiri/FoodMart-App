@@ -4,7 +4,7 @@ import Search from "../../UI/Search";
 import useTitle from "../../../hooks/useTitle";
 import DropdownLoggedIn from "./DropDownLoggedIn";
 import DropdownLoggedOut from "./DropDownLoggedOut";
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   //for showing dropdonw on userIcon
