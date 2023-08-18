@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { cartStoreActions } from "../../store/cartContext/cart-context";
 
 export const CartCard = ({ product }) => {
+  //dispatching an action to remove the item from the cart
+  const dispath = useDispatch();
+
+  //Handler function to remove item from the cart to dispatch an action from the cart
+  const removeItemHandler = () => {
+    dispath(cartStoreActions.removeItemFromCart({ product: product }));
+  };
+
   return (
     <div className="flex flex-wrap justify-between border-b dark:border-slate-700 max-w-4xl m-auto p-2 mb-5 ">
       <div className="flex">
@@ -18,7 +28,10 @@ export const CartCard = ({ product }) => {
               {product.name}
             </p>
           </Link>
-          <button className="text-base ml-2 text-red-400 hover:bg-gray-500 hover:rounded-full">
+          <button
+            className="text-base ml-2 text-red-400 hover:bg-gray-500 hover:rounded-full"
+            onClick={removeItemHandler}
+          >
             <i className="bi bi-eraser-fill"> Remove </i>
           </button>
 

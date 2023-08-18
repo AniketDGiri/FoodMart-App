@@ -274,6 +274,12 @@
       "password": "$2a$10$2MmBKUHpsXjXkmiBWqBQzuu05zTusqvDedrnP/ElBJ8S4AISRACzW",
       "name": "Aniket",
       "id": 6
+    },
+    {
+      "email": "rushi.g@example.com",
+      "password": "$2a$10$x6XTVRSEOPw7XIi3f2oNjukOnX1KshW5dhHVJb7df/Bgfc1Uj2hUa",
+      "name": "Rushi",
+      "id": 7
     }
   ]
 }

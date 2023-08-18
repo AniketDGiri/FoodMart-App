@@ -1,13 +1,24 @@
 import CartCard from "./CartCard";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import CartCheckout from "./CartCheckout";
+import { useState } from "react";
 
 export const CartList = () => {
+  //useState hook to display the cart info, and show the checkout component
+  const [isCartCheckout, setIsCartCheckout] = useState(false);
   const cartItemsInfo = useSelector((state) => {
     return state.cartStore;
   });
 
+  const onPlaceButtonHandler = () => {
+    setIsCartCheckout((prev) => {
+      return !prev;
+    });
+  };
+
   return (
     <>
+      {isCartCheckout && <CartCheckout setIsCartCheckout={setIsCartCheckout} />}
       <section>
         <p className="text-2xl text-center font-semibold dark:text-slate-100 my-10 underline underline-offset-8">
           My Cart ({cartItemsInfo.totalCartItems})
@@ -31,6 +42,7 @@ export const CartList = () => {
           <button
             type="button"
             className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-base px-7 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700"
+            onClick={onPlaceButtonHandler}
           >
             PLACE ORDER <i className="ml-2 bi bi-arrow-right"></i>
           </button>
