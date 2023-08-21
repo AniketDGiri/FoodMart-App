@@ -44,6 +44,11 @@ export const cartContext = createSlice({
       state.totalAmount -= product.price;
       state.totalCartItems -= 1;
     },
+    clearCart(state, action) {
+      state.cartItems = [];
+      state.totalAmount = 0;
+      state.totalCartItems = 0;
+    },
   },
 });
 

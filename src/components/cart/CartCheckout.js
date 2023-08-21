@@ -1,23 +1,33 @@
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { cartStoreActions } from "../../store/cartContext/cart-context";
 
 export const CartCheckout = ({ setIsCartCheckout }) => {
+  //using useNavigate Hook to render different page
+  const navigate = useNavigate();
   //useState to get change the state on getting userData
   const [userData, setUserData] = useState({});
   //useEffect hook to get the data of the user
-  useEffect(() => {
-    //fetching session info of the logged in User
-    const userId = JSON.parse(sessionStorage.getItem("userId"));
-    const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
 
+  //fetching session info of the logged in User
+  const userId = JSON.parse(sessionStorage.getItem("userId"));
+  const accessToken = JSON.parse(sessionStorage.getItem("accessToken").trim());
+
+  //useDispatch Hook for clearing the cart once order is successfull
+  const dispatch = useDispatch();
+
+  useEffect(() => {
     if (accessToken) {
       const getUserDetails = async () => {
         const res = await axios.get(
           `http://localhost:8000/600/users/${userId}`,
           {
             headers: {
-              "Content-Type": "Application/json",
+              "Content-Type": "application/json",
               Authorization: `Bearer ${accessToken}`,
             },
           }
@@ -26,7 +36,49 @@ export const CartCheckout = ({ setIsCartCheckout }) => {
       };
       getUserDetails();
     }
-  }, []);
+  }, [accessToken, userId]);
+
+  //useSelector hook to fetch the cart items
+  const cartItemsInfo = useSelector((state) => state.cartStore);
+
+  //handling paynow order
+  const onOrderButtonHandler = async (event) => {
+    event.preventDefault();
+    const orderDetails = {
+      cartItems: cartItemsInfo.cartItems,
+      totalItems: cartItemsInfo.totalCartItems,
+      totalAmount: cartItemsInfo.totalAmount,
+      userDetails: {
+        name: userData.name,
+        email: userData.email,
+        id: userData.id,
+      },
+    };
+
+    const sendOrderDetails = async () => {
+      try {
+        const res = await axios({
+          method: "post",
+          url: "http://localhost:8000/660/orders",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          data: orderDetails,
+        });
+        console.log(res.data);
+        dispatch(cartStoreActions.clearCart());
+        navigate("/order-summary", {
+          state: { orderData: res.data, status: res.status },
+        });
+      } catch (err) {
+        navigate("/order-summary", {
+          state: { status: 400 },
+        });
+      }
+    };
+    sendOrderDetails();
+  };
 
   return (
     <section>
@@ -37,9 +89,6 @@ export const CartCheckout = ({ setIsCartCheckout }) => {
         className="mt-5 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center flex"
         aria-modal="true"
         role="dialog"
-        onClick={() => {
-          setIsCartCheckout(false);
-        }}
       >
         <div className="relative p-4 w-full max-w-md h-full md:h-auto overflow-y-auto">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -70,7 +119,7 @@ export const CartCheckout = ({ setIsCartCheckout }) => {
               <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                 <i className="bi bi-credit-card mr-2"></i>CARD PAYMENT
               </h3>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={onOrderButtonHandler}>
                 <div>
                   <label
                     htmlFor="name"
@@ -166,7 +215,7 @@ export const CartCheckout = ({ setIsCartCheckout }) => {
                   />
                 </div>
                 <p className="mb-4 text-2xl font-semibold text-lime-500 text-center">
-                  $99
+                  {cartItemsInfo.totalAmount}
                 </p>
                 <button
                   type="submit"

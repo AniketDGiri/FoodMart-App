@@ -9,6 +9,7 @@ import Login from "../components/Authentication/Login";
 import Register from "../components/Authentication/Register";
 import CartInfo from "../components/cart/CartInfo";
 import ProtectedRoutes from "../components/Authentication/ProtectedRoutes";
+import OrderPage from "../components/order/OrderPage";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             <CartInfo />
           </ProtectedRoutes>
         ),
+      },
+      {
+        path: "order-summary",
+        element: <OrderPage />,
       },
     ],
   },
