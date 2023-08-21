@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const DropdownLoggedIn = ({ setIsDropDownn }) => {
   const navigate = useNavigate();
-  const onLogoutHandler = () => {
+  const onLogInHandler = () => {
     navigate("/");
     sessionStorage.removeItem("accessToken");
     sessionStorage.removeItem("userId");
@@ -23,22 +23,26 @@ export const DropdownLoggedIn = ({ setIsDropDownn }) => {
       >
         <li>
           <Link
-            href="/"
+            to="/"
             className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >
             All eBooks
           </Link>
         </li>
-        <li>
+        <li
+          onClick={() => {
+            setIsDropDownn(false);
+          }}
+        >
           <Link
-            href="/"
+            to="/dashboard"
             className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
           >
             Dashboard
           </Link>
         </li>
       </ul>
-      <div className="py-1" onClick={onLogoutHandler}>
+      <div className="py-1" onClick={onLogInHandler}>
         <span className="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
           Log out
         </span>

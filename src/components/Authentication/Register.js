@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import apiCalls from "../../services/apiCalls";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -15,14 +15,17 @@ export const Register = () => {
     };
 
     try {
-      const data = await axios({
+      const url = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT_NO}/register`;
+
+      const data = await apiCalls({
         method: "post",
-        url: "http://localhost:8000/register",
+        url: url,
         data: authDetails,
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       if (data.status === 201) {
         navigate("/products");
         toast("🦄 User registered successfully", {
