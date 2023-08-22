@@ -1,3 +1,4 @@
+import React from "react";
 import HomePageTop from "./HomePageTop";
 import FeaturedProducts from "../Products/FeaturedProducts";
 import Testimonials from "./Testimonials";

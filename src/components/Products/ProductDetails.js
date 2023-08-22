@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
+import React from "react";
 import { STATUS_CODE } from "../../constants";
 import { useLoaderData } from "react-router-dom";
 import Rating from "../UI/Rating";
@@ -79,7 +82,7 @@ export const ProductDetail = () => {
 
 export default ProductDetail;
 
-export const productDetailsLoader = async ({ request, params }) => {
+export const productDetailsLoader = async ({ params }) => {
   const productId = params.productId;
 
   const url = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT_NO}/products/${productId}`;

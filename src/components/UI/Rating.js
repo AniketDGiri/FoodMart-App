@@ -1,3 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
+import React from "react";
+
 const Rating = (props) => {
   //For displaying star method
   const starDisplay = [];
