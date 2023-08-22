@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+import React from "react";
 import DashboardEmpty from "./DashboardEmpty";
 import DashboardCard from "./DashboardCard";
 import { useLoaderData } from "react-router-dom";

@@ -1,3 +1,4 @@
+import React from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/allRoutes";
 import { FilterProvider } from "./store/filterContext/filter-provider";

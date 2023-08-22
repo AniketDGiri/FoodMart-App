@@ -1,6 +1,6 @@
 import axios from "axios";
 
-console.log(process.env);
+// console.log(process.env);
 
 const apiCalls = async (configParams) => {
   const { method, url, headers, data } = configParams;

@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
+import React from "react";
 import { Card } from "../UI/Card";
 import { useCallback, useEffect, useState } from "react";
 import apiCalls from "../../services/apiCalls";

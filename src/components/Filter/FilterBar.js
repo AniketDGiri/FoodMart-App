@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+import React from "react";
 import { useFilter } from "../../store/filterContext/filter-provider";
 
 export const FilterBar = ({ setIsVisibleFilter }) => {

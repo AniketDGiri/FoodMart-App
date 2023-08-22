@@ -1,7 +1,9 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/prop-types */
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Card } from "../UI/Card";
 import FilterBar from "../Filter/FilterBar";
-import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import { useFilter } from "../../store/filterContext/filter-provider";
