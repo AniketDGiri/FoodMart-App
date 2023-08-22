@@ -1,15 +1,16 @@
 import { Card } from "../UI/Card";
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+import apiCalls from "../../services/apiCalls";
 
 export const FeaturedProducts = () => {
   const [featuredProductsData, setFeaturedProductsData] = useState([]);
 
   //using callback so that function is not called again
   const getProductsData = useCallback(async () => {
-    const res = await axios({
+    const url = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT_NO}/featured_products`;
+    const res = await apiCalls({
       method: "get",
-      url: "http://localhost:8000/featured_products",
+      url: url,
     });
 
     setFeaturedProductsData(res.data);

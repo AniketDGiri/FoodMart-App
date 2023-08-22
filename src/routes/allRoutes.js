@@ -10,6 +10,10 @@ import Register from "../components/Authentication/Register";
 import CartInfo from "../components/cart/CartInfo";
 import ProtectedRoutes from "../components/Authentication/ProtectedRoutes";
 import OrderPage from "../components/order/OrderPage";
+import DashboardPage, {
+  DashboardPageLoader,
+} from "../components/Dashboard/DashboardPage";
+import PageNotFound from "../components/UI/PageNotFound";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +55,12 @@ const router = createBrowserRouter([
         path: "order-summary",
         element: <OrderPage />,
       },
+      {
+        path: "dashboard",
+        element: <DashboardPage />,
+        loader: DashboardPageLoader,
+      },
+      { path: "*", element: <PageNotFound /> },
     ],
   },
 ]);

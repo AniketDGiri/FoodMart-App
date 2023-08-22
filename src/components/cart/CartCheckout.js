@@ -1,10 +1,12 @@
-import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { cartStoreActions } from "../../store/cartContext/cart-context";
+import apiCalls from "../../services/apiCalls";
+import { getSessionData } from "../../services/sessionDetails";
+import { toast } from "react-toastify";
 
 export const CartCheckout = ({ setIsCartCheckout }) => {
   //using useNavigate Hook to render different page
@@ -14,8 +16,7 @@ export const CartCheckout = ({ setIsCartCheckout }) => {
   //useEffect hook to get the data of the user
 
   //fetching session info of the logged in User
-  const userId = JSON.parse(sessionStorage.getItem("userId"));
-  const accessToken = JSON.parse(sessionStorage.getItem("accessToken").trim());
+  const { accessToken, userId } = getSessionData();
 
   //useDispatch Hook for clearing the cart once order is successfull
   const dispatch = useDispatch();
@@ -23,16 +24,28 @@ export const CartCheckout = ({ setIsCartCheckout }) => {
   useEffect(() => {
     if (accessToken) {
       const getUserDetails = async () => {
-        const res = await axios.get(
-          `http://localhost:8000/600/users/${userId}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        setUserData(res.data);
+        try {
+          const url = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT_NO}/600/users/${userId}`;
+
+          const res = await apiCalls({
+            method: "get",
+            url: url,
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+
+          setUserData(res.data);
+        } catch (err) {
+          toast.error(`Error Fetching user Data`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        }
       };
       getUserDetails();
     }
@@ -57,11 +70,12 @@ export const CartCheckout = ({ setIsCartCheckout }) => {
 
     const sendOrderDetails = async () => {
       try {
-        const res = await axios({
+        const url = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT_NO}/660/orders`;
+
+        const res = await apiCalls({
           method: "post",
-          url: "http://localhost:8000/660/orders",
+          url: url,
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
           },
           data: orderDetails,

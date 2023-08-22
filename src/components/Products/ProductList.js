@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import { useFilter } from "../../store/filterContext/filter-provider";
+import apiCalls from "../../services/apiCalls";
 
 const ProductList = () => {
   const [isFilterVisible, setIsVisibleFilter] = useState(false);
@@ -33,11 +34,13 @@ const ProductList = () => {
   //infinite loop, during component re-rendering
 
   const getProductDetails = useCallback(async () => {
-    const res = await axios({
+    const url = `${process.env.REACT_APP_URL}:${
+      process.env.REACT_APP_PORT_NO
+    }/products?name_like=${filterValue ? filterValue : ""}`;
+
+    const res = await apiCalls({
       method: "get",
-      url: `http://localhost:8000/products?name_like=${
-        filterValue ? filterValue : ""
-      }`,
+      url: url,
     });
     // setProductDetails(res.data);
     setInitialState(res.data);

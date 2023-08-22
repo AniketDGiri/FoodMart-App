@@ -1,7 +1,7 @@
-import axios from "axios";
 import { STATUS_CODE } from "../../constants";
 import { useLoaderData } from "react-router-dom";
 import Rating from "../UI/Rating";
+import apiCalls from "../../services/apiCalls";
 
 export const ProductDetail = () => {
   //Setting the data using state for providing info to the details page
@@ -82,9 +82,11 @@ export default ProductDetail;
 export const productDetailsLoader = async ({ request, params }) => {
   const productId = params.productId;
 
-  const response = await axios({
+  const url = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT_NO}/products/${productId}`;
+
+  const response = await apiCalls({
     method: "get",
-    url: `http://localhost:8000/products/${productId}`,
+    url: url,
   });
 
   if (response.status === STATUS_CODE.OK) {

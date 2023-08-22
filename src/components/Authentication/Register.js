@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import apiCalls from "../../services/apiCalls";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -15,14 +15,17 @@ export const Register = () => {
     };
 
     try {
-      const data = await axios({
+      const url = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT_NO}/register`;
+
+      const data = await apiCalls({
         method: "post",
-        url: "http://localhost:8000/register",
+        url: url,
         data: authDetails,
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       if (data.status === 201) {
         navigate("/products");
         toast("🦄 User registered successfully", {
@@ -67,7 +70,7 @@ export const Register = () => {
             type="name"
             id="name"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            placeholder="Shubham Sarda"
+            placeholder="Aniket Giri"
             required
             autoComplete="off"
           />
@@ -83,7 +86,7 @@ export const Register = () => {
             type="email"
             id="email"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            placeholder="shubham@example.com"
+            placeholder="aniket@example.com"
             required
             autoComplete="off"
           />

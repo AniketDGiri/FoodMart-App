@@ -1,4 +1,4 @@
 
 #directories to be added
 node_modules
-
+.env

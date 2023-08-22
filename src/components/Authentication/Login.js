@@ -1,7 +1,8 @@
-import axios from "axios";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import apiCalls from "../../services/apiCalls";
+import { setSessionData } from "../../services/sessionDetails";
 
 export const Login = () => {
   const email = useRef();
@@ -18,18 +19,16 @@ export const Login = () => {
     };
 
     try {
-      const data = await axios({
+      const url = `${process.env.REACT_APP_URL}:${process.env.REACT_APP_PORT_NO}/login`;
+      const data = await apiCalls({
         method: "post",
-        url: "http://localhost:8000/login",
+        url: url,
         data: authDetails,
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
       if (data.status === 200) {
         navigate("/products");
-        toast("🦄 User logged in successfully", {
+        toast.success("User LoggedIn Successfully!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -37,18 +36,31 @@ export const Login = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: "dark",
         });
-        sessionStorage.setItem(
-          "accessToken",
-          JSON.stringify(data.data.accessToken)
-        );
-        sessionStorage.setItem("userId", JSON.stringify(data.data.user.id));
+        // sessionStorage.setItem(
+        //   "accessToken",
+        //   JSON.stringify(data.data.accessToken)
+        // );
+        // sessionStorage.setItem("userId", JSON.stringify(data.data.user.id));
+        setSessionData({
+          accessToken: data.data.accessToken,
+          userId: data.data.user.id,
+        });
       }
     } catch (err) {
       const { response } = err;
 
-      toast.error(response.data);
+      toast.error(`${response.data}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
 
@@ -72,7 +84,7 @@ export const Login = () => {
             id="email"
             ref={email}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="shubham@example.com"
+            placeholder="aniket@example.com"
             required
             autoComplete="off"
           />
